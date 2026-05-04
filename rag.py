@@ -5,18 +5,17 @@ from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
 from groq import Groq
 from dotenv import load_dotenv
+from functools import lru_cache
 
 load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-model = None
-
+@lru_cache(maxsize=1)
 def get_model():
-    global model
-    if model is None:
-        from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer("all-MiniLM-L6-v2")
+    """Load and cache the embedding model"""
+    from sentence_transformers import SentenceTransformer
+    model = SentenceTransformer("all-MiniLM-L6-v2")
     return model
 
 

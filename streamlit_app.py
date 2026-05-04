@@ -1,12 +1,22 @@
 import os
 import streamlit as st
 
-from rag import load_pdf, chunk_text, create_index, retrieve, ask_llm
-
+# Suppress TensorFlow warnings
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 st.set_page_config(page_title="RAG Research Paper Reader", layout="centered")
 
 st.title("📚 AI Research Paper Reader")
+
+@st.cache_resource
+def load_rag_modules():
+    """Load RAG modules once and cache them"""
+    with st.spinner("⏳ Loading AI models... (this may take 1-2 minutes on first run)"):
+        from rag import load_pdf, chunk_text, create_index, retrieve, ask_llm
+        return load_pdf, chunk_text, create_index, retrieve, ask_llm
+
+load_pdf, chunk_text, create_index, retrieve, ask_llm = load_rag_modules()
+
 
 with st.sidebar:
     st.header("Settings")
@@ -15,7 +25,7 @@ with st.sidebar:
     if st.button("Clear session"):
         for kname in list(st.session_state.keys()):
             del st.session_state[kname]
-        st.experimental_rerun()
+        st.rerun()
 
 
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
