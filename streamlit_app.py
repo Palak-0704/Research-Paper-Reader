@@ -17,16 +17,9 @@ def load_rag_modules():
 
 load_pdf, chunk_text, create_index, retrieve, ask_llm = load_rag_modules()
 
-
-with st.sidebar:
-    st.header("Settings")
-    k = st.number_input("Number of retrieved chunks (k)", min_value=1, max_value=10, value=5)
-    show_sources = st.checkbox("Show retrieved chunks", value=True)
-    if st.button("Clear session"):
-        for kname in list(st.session_state.keys()):
-            del st.session_state[kname]
-        st.rerun()
-
+# Default settings
+k = 5
+show_sources = True
 
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
 
