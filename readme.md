@@ -35,7 +35,7 @@ Create `.env` file:
 ---
 
 ## 📸 UI Preview
-Upload PDF → Ask question → Get AI answer
+Upload PDF → Ask a question → Get an AI answer
 
 ---
 
@@ -46,6 +46,3 @@ Upload PDF → Ask question → Get AI answer
 - Add citation highlighting
 
 ---
-
-## 👩‍💻 Author
-Built as an AI + NLP project for internship portfolio.
